@@ -1,2 +1,6 @@
 1. Email with node.js backend
 https://blog.stackademic.com/how-to-send-emails-in-node-js-express-js-application-3ec57012a183
+
+
+2. Authorization implementing 
+https://clerk.com/blog/oauth2-react-user-authorization#implementing-o-auth-2-0-in-a-react-application
