@@ -1,0 +1,2 @@
+1. Email with node.js backend
+https://blog.stackademic.com/how-to-send-emails-in-node-js-express-js-application-3ec57012a183
