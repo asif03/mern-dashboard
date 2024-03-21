@@ -5,6 +5,19 @@ import googleIcon from "../assets/google.png";
 import { FaApple } from "react-icons/fa6";
 
 const Login = () => {
+  const handleGoogleLogin = async () => {
+    try {
+      // Gets authentication url from backend server
+      const {
+        data: { url },
+      } = await axios.get(`${serverUrl}/auth/url`);
+      // Navigate to consent screen
+      window.location.assign(url);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <div
@@ -25,6 +38,7 @@ const Login = () => {
             <button
               type="button"
               className="flex h-12 w-36 flex-row items-center justify-center gap-1 rounded-full border text-sm font-semibold text-light-primary dark:text-dark-primary"
+              onClick={handleGoogleLogin}
             >
               <img src={googleIcon} alt="Google ID" width={16} height={16} />{" "}
               Google
