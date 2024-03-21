@@ -3,6 +3,7 @@ import Logo from "../components/Logo";
 import Settings from "../components/Settings";
 import googleIcon from "../assets/google.png";
 import { FaApple } from "react-icons/fa6";
+import apiInstance from "../uitls/api";
 
 const Login = () => {
   const handleGoogleLogin = async () => {
@@ -10,7 +11,7 @@ const Login = () => {
       // Gets authentication url from backend server
       const {
         data: { url },
-      } = await axios.get(`${serverUrl}/auth/url`);
+      } = await apiInstance.get("/auth/url");
       // Navigate to consent screen
       window.location.assign(url);
     } catch (err) {
@@ -119,7 +120,7 @@ const Login = () => {
           <p className="pt-4 text-sm font-semibold text-secondary">
             Don’t have an account?{" "}
             <span className="text-light-primary dark:text-dark-primary">
-              <Link to="/signup">Sign in</Link>
+              <Link to="/signup">Sign up</Link>
             </span>
           </p>
         </div>

@@ -115,12 +115,6 @@ const Signup = () => {
                 This site is protected by reCAPTCHA and the Google Privacy
                 Policy.
               </p>
-              <p className="pt-4 text-sm font-semibold text-secondary">
-                Don’t have an account?{" "}
-                <span className="text-light-primary dark:text-dark-primary">
-                  Sign up
-                </span>
-              </p>
             </div>
           </div>
         </div>
