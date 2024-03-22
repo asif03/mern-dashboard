@@ -1,10 +1,12 @@
-import jwt from "jsonwebtoken";
+import "dotenv/config";
 import axios from "axios";
+import queryString from "query-string";
+import jwt from "jsonwebtoken";
 
-const config = {
+export const config = {
   clientId: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+  authUrl: "https://accounts.google.com/o/oauth2/auth",
   tokenUrl: "https://oauth2.googleapis.com/token",
   redirectUrl: process.env.REDIRECT_URL,
   clientUrl: process.env.CLIENT_URL,
@@ -32,7 +34,7 @@ const getTokenParams = (code) =>
     redirect_uri: config.redirectUrl,
   });
 
-export const getUrl = () => {
+export const getUrl = (_, res) => {
   res.json({
     url: `${config.authUrl}?${authParams}`,
   });
@@ -47,6 +49,7 @@ export const getToken = async (req, res) => {
   try {
     // Get all parameters needed to hit authorization server
     const tokenParam = getTokenParams(code);
+
     // Exchange authorization code for access token (id token is returned here too)
     const {
       data: { id_token },
@@ -59,15 +62,19 @@ export const getToken = async (req, res) => {
     const token = jwt.sign({ user }, config.tokenSecret, {
       expiresIn: config.tokenExpiration,
     });
+
     // Set cookies for user
     res.cookie("token", token, {
       maxAge: config.tokenExpiration,
       httpOnly: true,
     });
+
+    //console.log(res);
+
     // You can choose to store user in a DB instead
-    res.json({
+    /*res.json({
       user,
-    });
+    });*/
   } catch (err) {
     console.error("Error: ", err);
     res.status(500).json({ message: err.message || "Server error" });
@@ -78,6 +85,8 @@ export const login = async (req, res) => {
   try {
     // Get token from cookie
     const token = req.cookies.token;
+    //console.log(token);
+
     if (!token) return res.json({ loggedIn: false });
     const { user } = jwt.verify(token, config.tokenSecret);
     const newToken = jwt.sign({ user }, config.tokenSecret, {
