@@ -7,13 +7,17 @@ import {
 } from "react";
 import apiInstance from "../uitls/api";
 
-/*type authInitialValue = {
-  loggedIn: boolean;
-  checkLoginState: () => void;
-  user: [];
-};*/
+type authInitialValue = {
+  loggedIn: boolean | null;
+  checkLoginState: Promise<void>;
+  user: {
+    name: string;
+    email: string;
+    picture: string;
+  };
+};
 
-const AuthContext = createContext(undefined);
+const AuthContext = createContext<authInitialValue>(undefined);
 
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
@@ -25,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         data: { loggedIn: logged_in, user },
       } = await apiInstance.get("auth/logged_in");
 
-      console.log(logged_in);
+      console.log(loggedIn);
       console.log(user);
 
       setLoggedIn(logged_in);

@@ -6,6 +6,7 @@ import { useAuthContext } from "../../contexts/AuthContext";
 
 const Layout = () => {
   const { user, loggedIn, checkLoginState } = useAuthContext();
+
   useEffect(() => {
     (async () => {
       if (loggedIn === true) {

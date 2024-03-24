@@ -69,12 +69,10 @@ export const getToken = async (req, res) => {
       httpOnly: true,
     });
 
-    //console.log(res);
-
     // You can choose to store user in a DB instead
-    /*res.json({
+    res.json({
       user,
-    });*/
+    });
   } catch (err) {
     console.error("Error: ", err);
     res.status(500).json({ message: err.message || "Server error" });
@@ -83,9 +81,9 @@ export const getToken = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
+    console.log(req.cookies);
     // Get token from cookie
     const token = req.cookies.token;
-    //console.log(token);
 
     if (!token) return res.json({ loggedIn: false });
     const { user } = jwt.verify(token, config.tokenSecret);
