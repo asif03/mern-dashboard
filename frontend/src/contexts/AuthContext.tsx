@@ -7,13 +7,13 @@ import {
 } from "react";
 import apiInstance from "../uitls/api";
 
-type authInitialValue = {
+/*type authInitialValue = {
   loggedIn: boolean;
   checkLoginState: () => void;
   user: [];
-};
+};*/
 
-const AuthContext = createContext<authInitialValue | undefined>(undefined);
+const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(null);
