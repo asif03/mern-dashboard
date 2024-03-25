@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import "./App.css";
 import Login from "./pages/Login";
 import Layout from "./components/layout/Layout";
@@ -10,8 +9,6 @@ import Callback from "./components/auth/Callback";
 import { useAuthContext } from "./contexts/AuthContext";
 
 function App() {
-  // Ensures cookie is sent
-  axios.defaults.withCredentials = true;
   const { loggedIn } = useAuthContext();
 
   return (

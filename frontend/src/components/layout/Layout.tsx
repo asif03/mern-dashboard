@@ -27,10 +27,7 @@ const Layout = () => {
           <Sidebar />
         </aside>
         <section className="w-full">
-          <header className="relative flex h-20 w-full items-center justify-between border-l-1 border-[#F4F4F4] bg-light-primary dark:border-[#272B30] dark:bg-dark-primary">
-            <h4>{user?.name}</h4>
-            <br />
-            <p>{user?.email}</p>
+          <header className="relative flex h-20 w-full items-center border-l-1 border-[#F4F4F4] bg-light-primary dark:border-[#272B30] dark:bg-dark-primary">
             <Navbar />
           </header>
           <main>

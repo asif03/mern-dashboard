@@ -81,7 +81,6 @@ export const getToken = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log(req.cookies);
     // Get token from cookie
     const token = req.cookies.token;
 

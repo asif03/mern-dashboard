@@ -29,9 +29,6 @@ export const AuthProvider = ({ children }) => {
         data: { loggedIn: logged_in, user },
       } = await apiInstance.get("auth/logged_in");
 
-      console.log(loggedIn);
-      console.log(user);
-
       setLoggedIn(logged_in);
       user && setUser(user);
     } catch (err) {
