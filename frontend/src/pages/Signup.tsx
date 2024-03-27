@@ -1,27 +1,34 @@
-import Settings from "../components/Settings";
 import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
 import googleIcon from "../assets/google.png";
 import illustration from "../assets/Illustration.png";
 import { FaApple } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
+import SettingsAuth from "../components/SettingsAuth";
+import { useState } from "react";
 
 const Signup = () => {
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const handleUserCheck = () => {
+    setBtnDisabled(false);
+  };
+
   return (
     <>
       <div
-        className="flex h-screen w-full items-center bg-light-primary dark:bg-dark-primary"
+        className="flex h-auto w-full items-center bg-light-primary dark:bg-dark-primary sm:h-screen lg:h-screen"
         style={{ zIndex: "-1" }}
       >
-        <div className="hidden h-full w-1/3 flex-col bg-[#F4F4F4] sm:flex lg:flex">
-          <div className="h-20 px-5 py-5">
+        <div className="container mx-auto hidden h-full w-1/3 flex-col bg-[#F4F4F4] dark:bg-dark-secondary sm:flex lg:flex">
+          <div className="h-20 py-5">
             <Link to="/">
               <Logo />
             </Link>
           </div>
           <div className="flex h-[calc(100vh-80px)] flex-col items-center justify-center">
             <img src={illustration} alt="illustration" />
-            <h4 className="py-2 text-4xl font-semibold text-[#272B30]">
+            <h4 className="py-2 text-4xl font-semibold text-[#272B30] dark:text-dark-primary">
               Plan includes
             </h4>
             <ul className="flex flex-col gap-2 pt-4 text-sm font-semibold text-[#6F767E]">
@@ -37,17 +44,19 @@ const Signup = () => {
           </div>
         </div>
         <div className="w-full sm:w-2/3 lg:w-2/3">
-          <div className="container mx-auto flex h-screen flex-col items-center justify-between">
+          <div className="container mx-auto flex h-auto flex-col items-center justify-between md:h-screen lg:h-screen">
             <div className="flex h-20 w-full items-center justify-between gap-1 px-5 py-5 lg:justify-end">
               <Link to="/" className="block sm:hidden lg:hidden">
                 <Logo />
               </Link>
               <div className="text-xs font-bold">
                 <span className="text-[#9A9FA5]">Already a member? </span>
-                <Link to="/login">Sign in</Link>
+                <Link to="/login" className="dark:text-dark-primary">
+                  Sign in
+                </Link>
               </div>
             </div>
-            <div className="flex h-[calc(100vh-80px)] max-w-xl flex-col items-center justify-center gap-3 py-5">
+            <div className="flex h-auto max-w-xl flex-col items-center justify-center gap-3 py-5 lg:md:h-[calc(100vh-80px)]">
               <h1 className="text-5xl font-semibold text-light-primary dark:text-dark-primary">
                 Sign up
               </h1>
@@ -102,12 +111,14 @@ const Signup = () => {
                   id="simple-search"
                   className="block w-full rounded-lg bg-light-input-bg p-2.5 ps-10 text-sm text-light-primary placeholder:text-xs placeholder:font-semibold dark:bg-dark-input-bg dark:text-dark-primary dark:placeholder-gray-400"
                   placeholder="Your Email"
+                  onKeyUp={handleUserCheck}
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="flex h-11 w-full flex-row items-center justify-center gap-1 rounded-full bg-primary text-sm font-semibold text-primary"
+                className={`${btnDisabled ? "opacity-25" : "opacity-100"} flex h-11 w-full flex-row items-center justify-center gap-1 rounded-full bg-primary text-sm font-semibold text-primary`}
+                disabled={btnDisabled}
               >
                 Continue
               </button>
@@ -119,8 +130,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
-
-      <Settings />
+      <SettingsAuth />
     </>
   );
 };

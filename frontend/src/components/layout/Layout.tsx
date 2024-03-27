@@ -1,25 +1,8 @@
-import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../nav/Navbar";
 import Sidebar from "../sidebar";
-import { useAuthContext } from "../../contexts/AuthContext";
 
 const Layout = () => {
-  const { user, loggedIn, checkLoginState } = useAuthContext();
-
-  useEffect(() => {
-    (async () => {
-      if (loggedIn === true) {
-        try {
-          // Get posts from server
-          console.log("login success");
-        } catch (err) {
-          console.error(err);
-        }
-      }
-    })();
-  }, [loggedIn]);
-
   return (
     <>
       <div className="flex h-screen w-full flex-row bg-light-secondary dark:bg-dark-secondary">
