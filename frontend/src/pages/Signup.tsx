@@ -5,26 +5,61 @@ import illustration from "../assets/Illustration.png";
 import { FaApple } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
 import SettingsAuth from "../components/SettingsAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import apiInstance from "../uitls/api";
 
 interface IFormInput {
   email: string;
 }
 
 const Signup = () => {
-  const [btnDisabled, setBtnDisabled] = useState(true);
+  //const [email, setEmail] = useState("");
+  //const [btnDisabled, setBtnDisabled] = useState(true);
 
   const {
     register,
+    setError,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>({ mode: "all" });
-  const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+  } = useForm<IFormInput>({
+    criteriaMode: "all",
+  });
 
-  const handleEmailChange = () => {
-    setBtnDisabled(false);
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    console.log(data);
+    const response = await apiInstance
+      .get("/check-user", {
+        params: {
+          email: data.email,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    if (response.status > 200) {
+      setError("root.serverError", {
+        type: response.status,
+      });
+    }
   };
+
+  useEffect(() => {
+    setError("email", {
+      type: "manual",
+      message: "Dont Forget Your Username Should Be Cool!",
+    });
+  }, [setError]);
+
+  /*const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    console.log(e.target.value);
+    console.log(errors.email);
+  };*/
 
   return (
     <>
@@ -140,34 +175,17 @@ const Signup = () => {
                     )}
                   </div>
                   <div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3">
-                    {errors.email ? (
+                    {errors.email && (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
                         height="16"
                         fill="currentColor"
-                        className="bi bi-exclamation-triangle"
+                        className="bi bi-exclamation-triangle text-red-600"
                         viewBox="0 0 16 16"
                       >
                         <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z" />
                         <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                      </svg>
-                    ) : (
-                      <svg
-                        role="alert"
-                        className="text-light-primary dark:text-dark-primary"
-                        width="19"
-                        height="14"
-                        viewBox="0 0 19 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M3.2 1.75H15.8C16.1476 1.75 16.4492 1.9416 16.5991 2.2221L9.99924 6.4998C9.69693 6.69574 9.30309 6.69574 9.00078 6.4998L2.40088 2.22208C2.55081 1.94159 2.85239 1.75 3.2 1.75ZM2.3 4.25994V11.375C2.3 11.8582 2.70294 12.25 3.2 12.25H15.8C16.2971 12.25 16.7 11.8582 16.7 11.375V4.25995L10.9977 7.95588C10.0908 8.54371 8.90925 8.54371 8.00232 7.95588L2.3 4.25994ZM0.5 2.625C0.5 1.17525 1.70883 0 3.2 0H15.8C17.2912 0 18.5 1.17525 18.5 2.625V11.375C18.5 12.8247 17.2912 14 15.8 14H3.2C1.70883 14 0.5 12.8247 0.5 11.375V2.625Z"
-                          fill="#6F767E"
-                        />
                       </svg>
                     )}
                   </div>
@@ -180,14 +198,13 @@ const Signup = () => {
                       required: true,
                       pattern: /^\S+@\S+$/i,
                     })}
-                    aria-invalid={errors.email ? "true" : "false"}
-                    onKeyUp={handleEmailChange}
+                    //aria-invalid={errors.email ? "true" : "false"}
                   />
                 </div>
                 <button
                   type="submit"
-                  className={`${btnDisabled ? "opacity-25" : "opacity-100"} flex h-11 w-full flex-row items-center justify-center gap-1 rounded-full bg-primary text-sm font-semibold text-primary`}
-                  disabled={btnDisabled}
+                  className={`${errors.email ? "opacity-25" : "opacity-100"} flex h-11 w-full flex-row items-center justify-center gap-1 rounded-full bg-primary text-sm font-semibold text-primary`}
+                  disabled={errors.email === null}
                 >
                   Continue
                 </button>
