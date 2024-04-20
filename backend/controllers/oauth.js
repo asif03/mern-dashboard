@@ -73,9 +73,9 @@ export const getToken = async (req, res) => {
     //console.log(res.cookie.token);
 
     // You can choose to store user in a DB instead
-    /* res.json({
+    res.json({
       user,
-    });*/
+    });
   } catch (err) {
     console.error("Error: ", err);
     res.status(500).json({ message: err.message || "Server error" });

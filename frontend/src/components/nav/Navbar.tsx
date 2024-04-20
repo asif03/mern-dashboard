@@ -2,12 +2,13 @@ import { useState } from "react";
 import NavigationDrawer from "./NavigationDrawer";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import ToggleSwitch from "../ui/ToggleSwitch";
+import NavMenus from "./NavMenus";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-row p-2">
+    <div className="flex w-full flex-row items-center justify-between px-2">
       <button
         onClick={() => setIsOpen(true)}
         className="block sm:hidden lg:hidden"
@@ -42,7 +43,10 @@ const Navbar = () => {
           </div>
         </NavigationDrawer>
       </div>
-      <div>Iqbal</div>
+      <div className="flex w-full flex-row items-center justify-between">
+        <div>Search Form</div>
+        <NavMenus />
+      </div>
     </div>
   );
 };
