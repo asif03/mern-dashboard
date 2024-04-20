@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 
 import userRoutes from "./routes/users.js";
 import oauthRoutes from "./routes/oauth.js";
+import postRoutes from "./routes/posts.js";
 
 //import { config } from "./controllers/oauth.js";
 
@@ -27,8 +28,9 @@ app.use(
 // Parse Cookie
 app.use(cookieParser());
 
-//app.use("/user", userRoutes);
+app.use("/user", userRoutes);
 app.use("/auth", oauthRoutes);
+app.use("/posts", postRoutes);
 
 const mongodb = process.env.CONNECTION_URL;
 const port = process.env.PORT || 8000;

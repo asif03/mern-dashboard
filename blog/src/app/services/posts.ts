@@ -1,9 +1,9 @@
 import { api } from "./api";
 
 export interface Post {
-  id: number;
-  name: string;
-  fetched_at: string;
+  _id: string;
+  title: string;
+  description: string;
 }
 
 type PostsResponse = Post[];
@@ -13,7 +13,7 @@ export const postsApi = api.injectEndpoints({
     getPosts: builder.query<PostsResponse, void>({
       query: () => ({ url: "posts" }),
       providesTags: (result = []) => [
-        ...result.map(({ id }) => ({ type: "Posts", id } as const)),
+        ...result.map(({ _id }) => ({ type: "Posts", _id } as const)),
         { type: "Posts" as const, id: "LIST" },
       ],
     }),

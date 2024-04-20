@@ -6,14 +6,14 @@ const postSchema = mongoose.Schema({
     require: true,
   },
   description: String,
-  imageFile: String,
+  /*imageFile: String,
   tags: [String],
   likeCount: {
     type: Number,
     default: 0,
   },
   creatorId: String,
-  creatorName: String,
+  creatorName: String,*/
   createdAt: {
     type: Date,
     default: new Date(),
