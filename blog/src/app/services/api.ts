@@ -4,14 +4,14 @@ import { RootState } from "../store";
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/",
-  prepareHeaders: (headers, { getState }) => {
+  /*prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     const token = (getState() as RootState).auth.token;
     if (token) {
       headers.set("authentication", `Bearer ${token}`);
     }
     return headers;
-  },
+  },*/
 });
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 6 });

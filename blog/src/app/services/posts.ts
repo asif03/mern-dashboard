@@ -14,7 +14,7 @@ export const postsApi = api.injectEndpoints({
       query: () => ({ url: "posts" }),
       providesTags: (result = []) => [
         ...result.map(({ _id }) => ({ type: "Posts", _id } as const)),
-        { type: "Posts" as const, id: "LIST" },
+        { type: "Posts" as const, _id: "LIST" },
       ],
     }),
 
