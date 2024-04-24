@@ -1,10 +1,10 @@
-import React from "react";
-import PostList from "../features/posts/PostList";
+import { Link, Outlet } from "react-router-dom";
 
 const Blog = () => {
   return (
     <div>
-      <PostList />
+      <Link to="new-post">+ Create Post</Link>
+      <Outlet />
     </div>
   );
 };

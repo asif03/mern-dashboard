@@ -1,9 +1,8 @@
-import { postsApi, useGetPostsQuery } from "../../app/services/posts";
+import { Link } from "react-router-dom";
+import { useGetPostsQuery } from "../../app/services/posts";
 
 const PostList = () => {
   const { data, error } = useGetPostsQuery();
-
-  console.log(data);
 
   return error ? (
     <>there was an error</>
@@ -15,6 +14,7 @@ const PostList = () => {
         {data.map((post) => (
           <li key={post._id}>
             <button>{post.title}</button>
+            <Link to={post._id}>More</Link>
           </li>
         ))}
       </ul>

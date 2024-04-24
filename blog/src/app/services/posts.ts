@@ -12,10 +12,15 @@ export const postsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<PostsResponse, void>({
       query: () => ({ url: "posts" }),
-      providesTags: (result = []) => [
+      providesTags: ["Posts"],
+      /*(result = []) => [
         ...result.map(({ _id }) => ({ type: "Posts", _id } as const)),
         { type: "Posts" as const, _id: "LIST" },
-      ],
+      ],*/
+    }),
+
+    getPost: builder.query<Post, string>({
+      query: (id) => `posts/${id}`,
     }),
 
     addPost: builder.mutation<Post, Partial<Post>>({
@@ -24,9 +29,10 @@ export const postsApi = api.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+      invalidatesTags: ["Posts"], //[{ type: "Posts", id: "LIST" }],
     }),
   }),
 });
 
-export const { useAddPostMutation, useGetPostsQuery } = postsApi;
+export const { useAddPostMutation, useGetPostsQuery, useGetPostQuery } =
+  postsApi;

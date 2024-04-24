@@ -12,9 +12,9 @@ export const getPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const { title, description, imageFile, tags, creatorId } = req.body;
+  const { title, description } = req.body;
 
-  const newPost = new Post({ title, description, imageFile, creatorId, tags });
+  const newPost = new Post({ title, description });
 
   try {
     await newPost.save();
