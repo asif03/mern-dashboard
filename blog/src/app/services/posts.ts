@@ -20,7 +20,7 @@ export const postsApi = api.injectEndpoints({
     }),
 
     getPost: builder.query<Post, string>({
-      query: (id) => `posts/${id}`,
+      query: (postId) => `posts/${postId}`,
     }),
 
     addPost: builder.mutation<Post, Partial<Post>>({

@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import PostList from "./features/posts/PostList";
 import AddPost from "./features/posts/AddPost";
 import PostDetails from "./features/posts/PostDetails";
+import EditPost from "./features/posts/EditPost";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path="blog" element={<Blog />}>
             <Route index element={<PostList />} />
             <Route path="new-post" element={<AddPost />} />
-            <Route path=":id" element={<PostDetails />} />
+            <Route path=":postId" element={<PostDetails />} />
+            <Route path=":postId/edit" element={<EditPost />} />
           </Route>
 
           <Route path="/contact" element={<Contact />} />

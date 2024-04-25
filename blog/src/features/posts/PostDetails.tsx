@@ -1,13 +1,19 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetPostQuery } from "../../app/services/posts";
 
 const PostDetails = () => {
   const { postId } = useParams();
-  console.log(postId);
 
-  const { data: post, isLoading, isError } = useGetPostQuery(postId);
+  const { data, isLoading, isError } = useGetPostQuery(postId);
+  console.log(data);
 
-  return <div>Asif</div>;
+  return (
+    <div>
+      <h1>{data?.title}</h1>
+      <p>{data?.description}</p>
+      <Link to={`/blog/${data?._id}/edit`}>Edit</Link>
+    </div>
+  );
 };
 
 export default PostDetails;
