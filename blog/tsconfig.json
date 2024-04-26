@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "../../../xampp/htdocs/course-calender/containers"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

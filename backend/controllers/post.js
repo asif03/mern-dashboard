@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Post from "../models/postSchema.js";
 
 export const getPosts = async (req, res) => {
@@ -39,6 +40,7 @@ export const getPost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   const { id } = req.params;
+
   const { title, description } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -48,9 +50,18 @@ export const updatePost = async (req, res) => {
 
   await Post.findByIdAndUpdate(id, updatedPost, { new: true });
 
-  res.json(updatedPost);
+  return res.status(200).json(updatedPost);
 };
 
-export const deletePost = (req, res) => {};
+export const deletePost = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`);
+
+  await Post.findByIdAndDelete(id);
+
+  res.status(200).json({ message: "Post deleted successfully." });
+};
 
 export const likePost = (req, res) => {};

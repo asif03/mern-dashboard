@@ -1,17 +1,35 @@
-import { Link, useParams } from "react-router-dom";
-import { useGetPostQuery } from "../../app/services/posts";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useDeletePostMutation,
+  useGetPostQuery,
+} from "../../app/services/posts";
+import { useEffect } from "react";
 
 const PostDetails = () => {
   const { postId } = useParams();
 
-  const { data, isLoading, isError } = useGetPostQuery(postId);
-  console.log(data);
+  const { data: post, isLoading, isError } = useGetPostQuery(postId);
+
+  const [deletePost, { isSuccess }] = useDeletePostMutation();
+
+  const handlePostDelete = () => {
+    deletePost(postId);
+  };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/blog");
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <div>
-      <h1>{data?.title}</h1>
-      <p>{data?.description}</p>
-      <Link to={`/blog/${data?._id}/edit`}>Edit</Link>
+      <h1>{post?.title}</h1>
+      <p>{post?.description}</p>
+      <Link to={`/blog/${post?._id}/edit`}>Edit</Link>
+      <button onClick={handlePostDelete}>Delete</button>
     </div>
   );
 };

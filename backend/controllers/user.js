@@ -62,7 +62,7 @@ export const signup = async (req, res) => {
       }
     );
 
-    return res.status(200).json({ result, token });
+    return res.status(201).json({ result, token });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

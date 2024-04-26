@@ -20,7 +20,7 @@ app.use(
   cors({
     //origin: [config.clientUrl],
     origin: true,
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET", "PATCH", "DELETE"],
     credentials: true,
   })
 );
@@ -32,8 +32,8 @@ app.use("/user", userRoutes);
 app.use("/auth", oauthRoutes);
 app.use("/posts", postRoutes);
 
-const mongodb = process.env.CONNECTION_URL || "mongodb://localhost:27017/mern";
-const port = process.env.PORT || 5000;
+const mongodb = process.env.CONNECTION_URL;
+const port = process.env.PORT || 8000;
 
 mongoose
   .connect(mongodb, {
