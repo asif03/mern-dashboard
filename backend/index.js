@@ -32,8 +32,11 @@ app.use("/user", userRoutes);
 app.use("/auth", oauthRoutes);
 app.use("/posts", postRoutes);
 
-const mongodb = process.env.CONNECTION_URL;
-const port = process.env.PORT || 8000;
+//const mongodb = process.env.CONNECTION_URL;
+//const port = process.env.PORT || 8000;
+
+const mongodb = process.env.CONNECTION_URL || "mongodb://localhost:27017/mern";
+const port = process.env.PORT || 5000;
 
 mongoose
   .connect(mongodb, {
