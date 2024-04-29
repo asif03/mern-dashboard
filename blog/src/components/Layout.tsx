@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "../../../../../xampp/htdocs/course-calender/containers/Header";
-import Footer from "../../../../../xampp/htdocs/course-calender/containers/Footer";
+import Header from "./header/Header";
+import Footer from "./footer/Footer";
 
 const Layout = () => {
   return (

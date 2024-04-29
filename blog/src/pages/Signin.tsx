@@ -6,6 +6,7 @@ import { setCredentials } from "../features/auth/authSlice";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
