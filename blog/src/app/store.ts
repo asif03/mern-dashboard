@@ -1,6 +1,7 @@
 import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { api } from "./services/api";
+import authReducer from "../features/auth/authSlice";
 
 export const createStore = (
   options?: ConfigureStoreOptions["preloadedState"] | undefined
@@ -8,10 +9,12 @@ export const createStore = (
   configureStore({
     reducer: {
       [api.reducerPath]: api.reducer,
+      auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
     ...options,
+    devTools: true,
   });
 
 export const store = createStore();

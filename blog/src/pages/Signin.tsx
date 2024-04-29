@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../app/services/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -7,8 +10,30 @@ const Signin = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      console.log(userInfo);
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await login(formData).unwrap();
+      dispatch(setCredentials({ ...res }));
+
+      navigate("/");
+    } catch (error) {
+      console.log(error?.data?.message || error.error);
+    }
   };
   return (
     <div>
@@ -16,11 +41,13 @@ const Signin = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="email"
+          name="email"
           value={formData.email}
           onChange={handleTextChange}
         />
         <input
           type="password"
+          name="password"
           value={formData.password}
           onChange={handleTextChange}
         />
