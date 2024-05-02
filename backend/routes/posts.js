@@ -7,10 +7,11 @@ import {
   likePost,
   updatePost,
 } from "../controllers/post.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", getPosts);
+router.get("/", auth, getPosts);
 router.post("/", createPost);
 router.get("/:id", getPost);
 router.patch("/:id", updatePost);

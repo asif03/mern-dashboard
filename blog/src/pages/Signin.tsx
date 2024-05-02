@@ -29,6 +29,9 @@ const Signin = () => {
     e.preventDefault();
     try {
       const res = await login(formData).unwrap();
+
+      console.log(res);
+
       dispatch(setCredentials({ ...res }));
 
       navigate("/");
