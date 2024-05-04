@@ -2,6 +2,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"]
+    },
+    /*"paths": {
       "@components/*": ["src/components/*"],
       "@components": ["src/components/index.ts"],
       "@assets/*": ["src/assets/*"],
@@ -18,7 +21,7 @@
       "@containers/*": ["src/containers/*"],
       "@containers": ["src/containers/index.js"],
       "@hooks/*": ["src/hooks/*"]
-    },
+    },*/
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

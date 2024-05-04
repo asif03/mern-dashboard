@@ -4,9 +4,9 @@ import Footer from "./footer/Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="w-full h-screen bg-background">
       <Header />
-      <main>
+      <main className="w-full h-auto container">
         <Outlet />
       </main>
       <Footer />

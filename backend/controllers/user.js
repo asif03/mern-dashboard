@@ -90,7 +90,7 @@ export const login = async (req, res) => {
         }
       );
 
-      return res.status(200).json({ result: existingUser, token });
+      return res.status(200).json({ user: existingUser, token });
     });
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong!" });

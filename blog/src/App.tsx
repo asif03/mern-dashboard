@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
@@ -29,6 +31,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </>
   );
 }

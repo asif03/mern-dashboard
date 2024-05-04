@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../app/services/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Signin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -20,7 +21,7 @@ const Signin = () => {
 
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo);
+      //onsole.log(userInfo);
       navigate("/");
     }
   }, [navigate, userInfo]);
@@ -29,14 +30,11 @@ const Signin = () => {
     e.preventDefault();
     try {
       const res = await login(formData).unwrap();
-
-      console.log(res);
-
+      //console.log(res);
       dispatch(setCredentials({ ...res }));
-
       navigate("/");
     } catch (error) {
-      console.log(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error);
     }
   };
   return (

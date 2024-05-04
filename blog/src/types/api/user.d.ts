@@ -1,6 +1,8 @@
 export interface IUser {
-  firstName: string;
-  lastName: string;
+  name: {
+    firstName: string;
+    lastName: string;
+  };
   email: string;
 }
 
@@ -11,5 +13,4 @@ export interface ILoginRequest {
 
 export interface UserResponse {
   user: IUser;
-  token: string;
 }

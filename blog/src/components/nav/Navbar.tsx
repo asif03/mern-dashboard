@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
+import Logo from "../Logo";
 
 const Navbar = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -12,9 +13,10 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <div>
-      <ul>
-        <li>
+    <div className="w-full container h-24 flex justify-between items-center font-sans">
+      <Logo />
+      <ul className="flex gap-4">
+        <li className="inline-block">
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? "active" : "")}
@@ -22,7 +24,7 @@ const Navbar = () => {
             Home
           </NavLink>
         </li>
-        <li>
+        <li className="inline-block">
           <NavLink
             to="/blog"
             style={({ isActive }) => {
@@ -34,7 +36,7 @@ const Navbar = () => {
             Blog
           </NavLink>
         </li>
-        <li>
+        <li className="inline-block">
           <NavLink
             to="/contact"
             style={({ isActive }) => {
