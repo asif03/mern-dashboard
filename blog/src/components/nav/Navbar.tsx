@@ -19,7 +19,12 @@ const Navbar = () => {
         <li className="inline-block">
           <NavLink
             to="/"
-            className={({ isActive }) => (isActive ? "active" : "")}
+            // className={({ isActive }) => (isActive ? "active" : "")}
+            style={({ isActive }) => {
+              return {
+                fontWeight: isActive ? "bold" : "",
+              };
+            }}
           >
             Home
           </NavLink>
