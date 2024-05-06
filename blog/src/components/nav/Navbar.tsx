@@ -2,11 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
 import Logo from "../Logo";
+import { Switch } from "../ui/switch";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [enabled, setEnabled] = useState(false);
+
   const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleToggleChange = () => {
+    setEnabled(!enabled);
+    alert(enabled);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -49,14 +58,16 @@ const Navbar = () => {
           </NavLink>
         </li>
       </ul>
-
-      {userInfo ? (
-        <>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <Link to="/signin">Login</Link>
-      )}
+      <div className="flex gap-2 items-center">
+        {userInfo ? (
+          <>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to="/signin">Login</Link>
+        )}
+        <Switch checked={enabled} onCheckedChange={handleToggleChange} />
+      </div>
     </div>
   );
 };
