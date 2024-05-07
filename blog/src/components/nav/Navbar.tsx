@@ -2,18 +2,46 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
 import Logo from "../Logo";
+import { Switch } from "../ui/switch";
+import { useEffect, useState } from "react";
+import { setTheme } from "@/features/theme/themeSlice";
 
 const Navbar = () => {
+  const [themeData, setThemeData] = useState({
+    theme: localStorage.getItem("theme")
+      ? JSON.parse(localStorage.getItem("theme")).theme
+      : "light",
+    toggle: localStorage.getItem("theme")
+      ? JSON.parse(localStorage.getItem("theme")).toggle
+      : false,
+  });
+
+  //console.log(themeData);
+  //console.log(localStorage.getItem("theme"));
+
   const { userInfo } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleToggleChange = () => {
+    setThemeData((prev) => ({ ...prev, toggle: !prev.toggle }));
+  };
+
+  useEffect(() => {
+    if (themeData.toggle) {
+      dispatch(setTheme({ theme: "dark", toggle: themeData.toggle }));
+    } else {
+      dispatch(setTheme({ theme: "light", toggle: themeData.toggle }));
+    }
+  }, [themeData]);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
   return (
-    <div className="w-full container h-24 flex justify-between items-center font-sans">
+    <div className="w-full container h-24 flex justify-between items-center font-sans bg-white dark:bg-black">
       <Logo />
       <ul className="flex gap-4">
         <li className="inline-block">
@@ -54,14 +82,19 @@ const Navbar = () => {
           </NavLink>
         </li>
       </ul>
-
-      {userInfo ? (
-        <>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <Link to="/signin">Login</Link>
-      )}
+      <div className="flex gap-2 items-center">
+        {userInfo ? (
+          <>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <Link to="/signin">Login</Link>
+        )}
+        <Switch
+          checked={themeData.toggle}
+          onCheckedChange={handleToggleChange}
+        />
+      </div>
     </div>
   );
 };

@@ -11,14 +11,26 @@ import PostList from "./features/posts/PostList";
 import AddPost from "./features/posts/AddPost";
 import PostDetails from "./features/posts/PostDetails";
 import EditPost from "./features/posts/EditPost";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
+  const { theme } = useSelector((state) => state.themeMode);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   return (
     <>
       <Routes>
-        <Route path="signin" element={<Signin />} />
-        <Route path="signup" element={<Signup />} />
         <Route element={<Layout />}>
+          <Route path="signin" element={<Signin />} />
+          <Route path="signup" element={<Signup />} />
           <Route path="/" element={<Home />} />
 
           <Route path="blog" element={<Blog />}>
