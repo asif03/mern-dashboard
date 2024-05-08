@@ -13,7 +13,9 @@ const Layout = () => {
           <Outlet />
         </div>
       </main>
-      <Footer />
+      <footer className="w-full h-auto flex ">
+        <Footer />
+      </footer>
     </div>
   );
 };
