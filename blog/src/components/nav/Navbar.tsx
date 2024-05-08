@@ -41,7 +41,7 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <div className="w-full container h-24 flex justify-between items-center font-sans bg-white dark:bg-black">
+    <div className="w-full container h-24 flex justify-between items-center font-sans text-slate-700 dark:text-slate-100">
       <Logo />
       <ul className="flex gap-4">
         <li className="inline-block">
