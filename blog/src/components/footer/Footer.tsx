@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className="w-full container py-5">
-      <div className="w-full flex flex-col lg:flex-row justify-between text-slate-700  dark:text-slate-100">
+      <div className="w-full flex flex-col lg:flex-row justify-between text-slate-700  dark:text-slate-100 lg:gap-10">
         <div className="lg:w-1/3 w-full lg:pr-5 pr-0">
           <h4>About</h4>
           <p className="text-justify text-slate-400">
