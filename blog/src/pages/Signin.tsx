@@ -1,64 +1,90 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../app/services/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { setCredentials } from "../features/auth/authSlice";
-import { toast } from "react-toastify";
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const FormSchema = z.object({
+  email: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  password: z
+    .string()
+    .min(6, { message: "Username must be at least 2 characters." }),
+});
 
 const Signin = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data);
+  }
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
-
-  const { userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (userInfo) {
-      //onsole.log(userInfo);
-      navigate("/");
-    }
-  }, [navigate, userInfo]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await login(formData).unwrap();
-      //console.log(res);
-      dispatch(setCredentials({ ...res }));
-      navigate("/");
-    } catch (error) {
-      toast.error(error?.data?.message || error.error);
-    }
-  };
   return (
-    <div>
-      <h1>Signin</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-5 w-1/4"
+      >
+        <FormField
+          control={form.control}
           name="email"
-          value={formData.email}
-          onChange={handleTextChange}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-black">Email</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="example@gmail.com"
+                  {...field}
+                  className="text-black"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <input
-          type="password"
+        <FormField
+          control={form.control}
           name="password"
-          value={formData.password}
-          onChange={handleTextChange}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-black">Password</FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="password"
+                  {...field}
+                  className="text-black"
+                />
+              </FormControl>
+              <FormDescription>
+                Password must be six characters.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        <button type="submit">Login</button>
+        <Button type="submit">Login</Button>
       </form>
-      <div>
-        Don't have an account <Link to="/signup">Sign up</Link>
-      </div>
-    </div>
+    </Form>
   );
 };
 
