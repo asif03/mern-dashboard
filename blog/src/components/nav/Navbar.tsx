@@ -5,7 +5,7 @@ import Logo from "../Logo";
 import { Switch } from "../ui/switch";
 import { useEffect, useState } from "react";
 import { setTheme } from "@/features/theme/themeSlice";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
   const [themeData, setThemeData] = useState({
@@ -89,11 +89,8 @@ const Navbar = () => {
             <button onClick={handleLogout}>Logout</button>
           </>
         ) : (
-          <Link
-            to="/signin"
-            className="text-gray-950 flex flex-row items-center"
-          >
-            <FaRegUser /> Login
+          <Link to="/signin" className="text-gray-950">
+            <FaRegUserCircle className="w-6 h-6" />
           </Link>
         )}
         <Switch

@@ -15,17 +15,36 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "@/app/services/auth";
+import { useEffect } from "react";
+import { setCredentials } from "@/features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
-  email: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  email: z.string().email({
+    message: "Invalid email address",
   }),
   password: z
     .string()
-    .min(6, { message: "Username must be at least 2 characters." }),
+    .min(6, { message: "Password must be at least 6 characters." }),
 });
 
 const Signin = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      //onsole.log(userInfo);
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -34,8 +53,16 @@ const Signin = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+    try {
+      const res = await login(data).unwrap();
+      //console.log(res);
+      dispatch(setCredentials({ ...res }));
+      navigate("/");
+    } catch (error) {
+      toast.error(error?.data?.message || error.error);
+    }
   }
 
   return (
