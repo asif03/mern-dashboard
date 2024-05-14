@@ -32,6 +32,8 @@ app.use("/user", userRoutes);
 app.use("/auth", oauthRoutes);
 app.use("/posts", postRoutes);
 
+//MongoDB Connection
+
 //const mongodb = process.env.CONNECTION_URL;
 //const port = process.env.PORT || 8000;
 
