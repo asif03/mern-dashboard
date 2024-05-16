@@ -1,16 +1,18 @@
-import { dbcon } from "../utils/connection.js";
+import dbcon from "../utils/connection.js";
 
-const connection = dbcon();
+class TaskModel {
+  getTaskList = () => {
+    // Example query execution
+    dbcon.query("SELECT * FROM users", function (error, results, fields) {
+      if (error) {
+        console.log("Error executing query: ", error);
+        throw error;
+      }
 
-export const getTaskList = async () => {
-  // Example query execution
-  connection.query("SELECT * FROM users", function (error, results, fields) {
-    if (error) {
-      console.log("Error executing query: ", error);
-      throw error;
-    }
-    console.log("Query results: ", results);
-  });
+      //return results;
+      console.log("Query results: ", results);
+    });
+  };
+}
 
-  return result;
-};
+export default TaskModel;
