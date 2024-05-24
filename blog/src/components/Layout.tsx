@@ -8,8 +8,8 @@ const Layout = () => {
       <header className="h-24 bg-background dark:bg-background">
         <Header />
       </header>
-      <main className="bg-background dark:bg-background h-[calc(100vh-6rem)]">
-        <div className="w-full h-full flex justify-center items-center">
+      <main className="bg-background dark:bg-background min-h-[calc(100vh-6rem)]">
+        <div className="w-full h-full flex justify-center">
           <Outlet />
         </div>
       </main>
